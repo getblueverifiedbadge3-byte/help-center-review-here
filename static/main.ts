@@ -1,11 +1,5 @@
+import { serve } from "https://deno.land/std@0.202.0/http/server.ts";
 import { serveDir } from "https://deno.land/std@0.202.0/http/file_server.ts";
 
-// Deno Deploy uses Deno.serve (no localhost binding needed)
-Deno.serve((req) => {
-  return serveDir(req, {
-    fsRoot: ".",          // serve from current repo root
-    urlRoot: "",
-    showDirListing: false,
-    enableCors: true,
-  });
-});
+// Serve all static files (index.html, CSS, JS) from the current folder
+serve((req) => serveDir(req, { fsRoot: ".", showDirListing: false }));
