@@ -1,17 +1,17 @@
 import { serve } from "https://deno.land/std@0.202.0/http/server.ts";
 
-const handler = async (_req: Request): Promise<Response> => {
+// Serve only index.html
+async function handler(_req: Request): Promise<Response> {
   try {
     const html = await Deno.readTextFile("./index.html");
     return new Response(html, {
-      status: 200,
-      headers: {
-        "content-type": "text/html; charset=utf-8",
-      },
+      headers: { "content-type": "text/html" },
     });
-  } catch (_err) {
-    return new Response("Failed to load index.html", { status: 500 });
+  } catch (error) {
+    console.error("Error reading index.html:", error);
+    return new Response("Internal Server Error", { status: 500 });
   }
-};
+}
 
+console.log("Server is running on http://localhost:8000");
 serve(handler);
